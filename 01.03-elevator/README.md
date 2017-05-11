@@ -16,5 +16,8 @@ gunzipped file in ~3m30s on an i5 Surface Pro 4.
 ## Usage
 
 Execute the following from bash / git bash on Windows:
-```time cat H3-easy.txt | ../target/release/elevator.exe``` or
-```time cat H3-hard | ../target/release/elevator.exe```
+```bash
+cargo build --release
+time cat H3-easy.txt | ../target/release/elevator.exe # or
+time cat H3-hard | ../target/release/elevator.exe
+```

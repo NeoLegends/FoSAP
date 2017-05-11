@@ -1,0 +1,6 @@
+[package]
+name = "elevator"
+version = "0.1.0"
+authors = ["Moritz Gunz <moritz.gunz@gmail.com>"]
+
+[dependencies]

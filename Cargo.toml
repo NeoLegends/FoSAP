@@ -1,0 +1,5 @@
+[workspace]
+members = ["01.03-elevator"]
+
+[profiles.release]
+lto = true

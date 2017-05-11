@@ -77,6 +77,8 @@ fn main() {
                 }
             },
 
+            0...19 => {},
+
             _ => {
                 println!("Got unknown input '{}'.", word);
             }

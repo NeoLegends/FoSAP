@@ -1,7 +1,7 @@
 # Elevator State Machine
 
 This is a simple program that reads lines containing the letters
-U, D, A, Z and R from it's standard in and simulates an elevator
+U, D, A, Z and R from its standard input and simulates an elevator
 based on that. U means up, D down, A open door, Z close door and R
 call emergency.
 

@@ -20,24 +20,27 @@ enum States {
     Closed4, Open4,
 }
 
+impl States {
+    pub fn is_end(&self) -> bool {
+        use States::*;
+
+        match *self {
+            Open0 | Open1 | Open2 | Open3 | Open4 => true,
+            _ => false
+        }
+    }
+}
+
 fn main() {
     use States::*;
 
     let mut state = Closed0;
     let mut data = BufReader::new(io::stdin())
         .bytes()
-        .map(|maybe_byte| maybe_byte.expect("Failed to read input!"));
+        .map(|maybe_byte| maybe_byte.expect("Failed to read input!"))
+        .peekable();
 
     while let Some(word) = data.next() {
-        if word == LF || word == CR {
-            let has_end_state = match state {
-                Open0 | Open1 | Open2 | Open3 | Open4 => true,
-                _ => false
-            };
-            println!("Reached end of line with end state: {}.", has_end_state);
-            state = Closed0;
-        }
-
         match word {
             CLOSE => {
                 match state {
@@ -81,6 +84,24 @@ fn main() {
                 }
             },
 
+            CR | LF => {
+                // Skip EOL characters
+                while let Some(w) = data.peek().map(|r| *r) {
+                    if w == CR || w == LF {
+                        data.next();
+                    } else {
+                        break;
+                    }
+                }
+
+                // Only output here if we're not at the end of the file.
+                // For EOF we have a special case down at the bottom.
+                if data.peek().is_some() {
+                    println!("Reached end of line with end state: {}.", state.is_end());
+                    state = Closed0;
+                }
+            },
+
             0...19 => {},
 
             _ => {
@@ -88,4 +109,6 @@ fn main() {
             }
         }
     }
+
+    println!("Reached end of file with end state: {}.", state.is_end());
 }

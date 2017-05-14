@@ -30,7 +30,11 @@ fn main() {
 
     while let Some(word) = data.next() {
         if word == LF || word == CR {
-            println!("Reached end of line. Ended up in {:?}.", state);
+            let has_end_state = match state {
+                Open0 | Open1 | Open2 | Open3 | Open4 => true,
+                _ => false
+            };
+            println!("Reached end of line with end state: {}.", has_end_state);
             state = Closed0;
         }
 

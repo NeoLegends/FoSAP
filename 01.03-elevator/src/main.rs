@@ -13,6 +13,7 @@ const LF: u8 = '\n' as u8;
 
 #[derive(Clone, Copy, Debug, Eq, PartialEq)]
 enum States {
+    Start,
     Closed0, Open0,
     Closed1, Open1,
     Closed2, Open2,
@@ -25,7 +26,7 @@ impl States {
         use States::*;
 
         match *self {
-            Open0 | Open1 | Open2 | Open3 | Open4 => true,
+            Start | Open0 | Open1 | Open2 | Open3 | Open4 => true,
             _ => false
         }
     }
@@ -34,7 +35,7 @@ impl States {
 fn main() {
     use States::*;
 
-    let mut state = Closed0;
+    let mut state = Start;
     let mut data = BufReader::new(io::stdin())
         .bytes()
         .map(|maybe_byte| maybe_byte.expect("Failed to read input!"))
@@ -62,6 +63,8 @@ fn main() {
                     _ => {}
                 }
             },
+
+            OPEN if state == Start => state = Open0,
 
             EMERG | OPEN => {
                 match state {
@@ -98,7 +101,7 @@ fn main() {
                 // For EOF we have a special case down at the bottom.
                 if data.peek().is_some() {
                     println!("Reached end of line with end state: {}.", state.is_end());
-                    state = Closed0;
+                    state = Start;
                 }
             },
 

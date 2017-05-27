@@ -1,5 +1,5 @@
 [workspace]
-members = ["01.03-elevator"]
+members = ["H3-elevator"]
 
 [profiles.release]
 lto = true

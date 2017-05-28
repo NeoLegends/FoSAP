@@ -59,32 +59,22 @@ impl<S, A> NFA<S, A>
         let mut possible_states = HashSet::new();
         possible_states.insert(from);
 
-        for word in with {
-            let mut new_states = HashSet::new();
-
-            // Nun gehen wir die möglichen Zustände des Automaten durch.
-            // Wir schauen nach Transitions von unserem aktuellen Zustand
-            // über das aktuelle Wort. Falls wir welche finden, fügen wir
-            // die neuen möglichen Zustände in die Liste der aktuell möglichen
-            // Zustände ein.
-            for state in possible_states {
-                self.transitions.get(&state)
-                    .and_then(|dict| dict.get(&word))
-                    .map(|set| new_states.extend(set.clone()));
-            }
-
-            possible_states = new_states;
-
-            // Kleine Optimierung: Falls es keine Zustände gibt, in denen
-            // wir aktuell sein können, können wir die Schleife unterbrechen,
-            // denn es gibt von hier aus keine Möglichkeit mehr, wieder in
-            // einen Zustand zu gelangen.
-            if possible_states.is_empty() {
-                break;
-            }
-        }
-
-        possible_states
+        // .fold ist eine Akkumulator-Funktion, durch die alle Buchstaben aus
+        // dem gegebenen Wort in die möglichen Zustände "reduziert" werden.
+        //
+        // In anderen Sprachen bekannt als .reduce, .aggregate, etc.
+        with.into_iter()
+            .fold(possible_states, |possible_states, word| {
+                // Nun gehen wir die möglichen Zustände des Automaten durch.
+                // Wir schauen nach Transitions von unserem aktuellen Zustand
+                // über das aktuelle Wort. Falls wir welche finden, vereinen
+                // wir die Mengen der gefundenen Zustände zu einer großen,
+                // von der wir dann im nächsten 'fold'-Schritt wieder ausgehen.
+                possible_states.into_iter()
+                    .filter_map(|state| self.transitions.get(&state))
+                    .filter_map(|trans| trans.get(&word))
+                    .fold(HashSet::new(), |set, states| &set | states)
+            })
     }
 }
 
@@ -98,8 +88,7 @@ mod tests {
 
     #[test]
     fn smoke() {
-        let states = vec![1, 2, 3, 4];
-        let mut nfa = NFA::new(states);
+        let mut nfa = NFA::new(vec![1, 2, 3, 4]);
 
         nfa.add_transition(1, "a", 1);
 
@@ -123,8 +112,7 @@ mod tests {
 
     #[test]
     fn inaccessible() {
-        let states = vec![1, 2];
-        let mut nfa = NFA::new(states);
+        let mut nfa = NFA::new(vec![1, 2]);
 
         nfa.add_transition(1, "b", 2);
 
@@ -132,5 +120,21 @@ mod tests {
         let expected_result = HashSet::new();
 
         assert_eq!(nfa.simulate(1, input), expected_result);
+    }
+
+    #[test]
+    #[should_panic]
+    fn simulation_validation() {
+        let mut nfa = NFA::new(vec![1, 2]);
+        nfa.add_transition(1, "a", 2);
+
+        nfa.simulate(3, &[]);
+    }
+
+    #[test]
+    #[should_panic]
+    fn transition_validation() {
+        let mut nfa = NFA::new(vec![1, 2]);
+        nfa.add_transition(4, "a", 5);
     }
 }

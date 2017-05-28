@@ -62,14 +62,20 @@ impl<S, A> NFA<S, A>
         // .fold ist eine Akkumulator-Funktion, durch die alle Buchstaben aus
         // dem gegebenen Wort in die möglichen Zustände "reduziert" werden.
         //
-        // In anderen Sprachen bekannt als .reduce, .aggregate, etc.
+        // In anderen Sprachen bekannt als `reduce` oder `aggregate`, etc.
         with.into_iter()
             .fold(possible_states, |possible_states, word| {
                 // Nun gehen wir die möglichen Zustände des Automaten durch.
                 // Wir schauen nach Transitions von unserem aktuellen Zustand
                 // über das aktuelle Wort. Falls wir welche finden, vereinen
                 // wir die Mengen der gefundenen Zustände zu einer großen,
-                // von der wir dann im nächsten 'fold'-Schritt wieder ausgehen.
+                // von der wir dann im nächsten `fold`-Schritt wieder ausgehen.
+                //
+                // .filter_map mappt alle Elemente der Auflistung auf einen
+                // anderen, und filtert dabei direkt die `null`-Werte heraus.
+                // Somit überspringen wir direkt alle Zustände von denen es
+                // keine Transitionen gibt und die Transitionen, die nicht
+                // von dem gegebenen Wort ausgelöst werden.
                 possible_states.into_iter()
                     .filter_map(|state| self.transitions.get(&state))
                     .filter_map(|trans| trans.get(&word))

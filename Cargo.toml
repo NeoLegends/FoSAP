@@ -1,5 +1,5 @@
 [workspace]
-members = ["H3-elevator"]
+members = ["H3-elevator", "H8-nfa"]
 
 [profiles.release]
 lto = true

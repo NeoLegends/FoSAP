@@ -8,9 +8,14 @@ use std::io::{self, BufRead, BufReader};
 use nfa::*;
 
 fn main() {
-    let mut nfa = NFA::new(0..35);
-    let file = File::open("./H8.trans")
-        .expect("Transition file 'H8.trans' not found!");
+    let mut nfa = NFA::new();
+
+    println!("Please enter the name of the file to parse for transitions:");
+    let mut file_name = String::new();
+    io::stdin().read_line(&mut file_name).unwrap();
+
+    let file = File::open(file_name.trim())
+        .expect("Transition file not found!");
 
     let tokens = BufReader::new(file)
         .lines()

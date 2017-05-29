@@ -1,15 +1,8 @@
 use std::collections::{HashMap, HashSet};
 use std::hash::Hash;
-use std::iter::FromIterator;
 
 /// Represents a nondeterministic finite automaton.
 pub struct NFA<S, A> {
-    /// The states the NFA can be in.
-    ///
-    /// This field is only used for validation when inserting
-    /// new transitions.
-    states: HashSet<S>,
-
     /// This contains the transitions from state S over A
     /// to some other given state(s) S.
     ///
@@ -23,21 +16,14 @@ impl<S, A> NFA<S, A>
         where S: Clone + Eq + Hash,
               A: Eq + Hash {
     /// Creates a new NFA with the given states.
-    pub fn new<I>(states: I) -> NFA<S, A>
-            where I: IntoIterator<Item = S> {
+    pub fn new() -> NFA<S, A> {
         NFA {
-            states: HashSet::from_iter(states),
             transitions: HashMap::new()
         }
     }
 
     /// Adds a transition to the NFA.
     pub fn add_transition(&mut self, from: S, with: A, to: S) {
-        assert!(
-            self.states.contains(&from) && self.states.contains(&to),
-            "Transition from or to unknown state."
-        );
-
         // .entry(...) holt sich den Wert aus der HashMap mit dem jeweiligen Key.
         // Falls er nicht existiert, wird er mit .or_insert_with(...) eingefügt.
         // Damit stellen wir sicher, dass alles nötige initialisiert ist.
@@ -50,8 +36,6 @@ impl<S, A> NFA<S, A>
 
     /// Simulates the NFA from the given starting point.
     pub fn simulate(&self, from: S, with: &[A]) -> HashSet<S> {
-        assert!(self.states.contains(&from), "Unknown state!");
-
         // Wir bauen uns ein Set mit den Zuständen, in denen der Automat
         // aktuell sein kann. Anfangs ist es nur der gegebene Startzustand.
         let mut start_state = HashSet::new();
@@ -88,7 +72,7 @@ mod tests {
 
     #[test]
     fn smoke() {
-        let mut nfa = NFA::new(vec![1, 2, 3, 4]);
+        let mut nfa = NFA::new();
 
         nfa.add_transition(1, "a", 1);
 
@@ -112,7 +96,7 @@ mod tests {
 
     #[test]
     fn inaccessible() {
-        let mut nfa = NFA::new(vec![1, 2]);
+        let mut nfa = NFA::new();
 
         nfa.add_transition(1, "b", 2);
 
@@ -120,21 +104,5 @@ mod tests {
         let expected_result = HashSet::new();
 
         assert_eq!(nfa.simulate(1, input), expected_result);
-    }
-
-    #[test]
-    #[should_panic]
-    fn simulation_validation() {
-        let mut nfa = NFA::new(vec![1, 2]);
-        nfa.add_transition(1, "a", 2);
-
-        nfa.simulate(3, &[]);
-    }
-
-    #[test]
-    #[should_panic]
-    fn transition_validation() {
-        let mut nfa = NFA::new(vec![1, 2]);
-        nfa.add_transition(4, "a", 5);
     }
 }

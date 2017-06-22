@@ -1,0 +1,289 @@
+
+running 3 tests
+Input: '<<<<<'
+Regular Expressions:
+[
+    (
+        "<",
+        "SMALLER"
+    )
+]
+Output:
+[
+    (
+        "<",
+        {
+            "SMALLER"
+        }
+    ),
+    (
+        "<",
+        {
+            "SMALLER"
+        }
+    ),
+    (
+        "<",
+        {
+            "SMALLER"
+        }
+    ),
+    (
+        "<",
+        {
+            "SMALLER"
+        }
+    ),
+    (
+        "<",
+        {
+            "SMALLER"
+        }
+    )
+]
+
+Input: 'abc<<dd'
+Regular Expressions:
+[
+    (
+        "abc",
+        "ABC"
+    ),
+    (
+        "<",
+        "SMALLER"
+    ),
+    (
+        "<<",
+        "DOUBLE SMALLER"
+    )
+]
+Output:
+[
+    (
+        "abc",
+        {
+            "rId",
+            "ABC"
+        }
+    ),
+    (
+        "<<",
+        {
+            "DOUBLE SMALLER"
+        }
+    ),
+    (
+        "dd",
+        {
+            "rId",
+            "ABC"
+        }
+    )
+]
+
+test tests::sim2 ... ok
+test tests::sim1 ... ok
+Input: 'for(i=0;i<10;i++){print(i);}'
+Regular Expressions:
+[
+    (
+        "for",
+        "FOR"
+    ),
+    (
+        "if",
+        "IF"
+    ),
+    (
+        "while",
+        "WHILE"
+    ),
+    (
+        ";",
+        "SEMICOLON"
+    ),
+    (
+        "<",
+        "SMALLER"
+    ),
+    (
+        "+",
+        "PLUS"
+    ),
+    (
+        "++",
+        "PLUSPLUS"
+    ),
+    (
+        "(",
+        "ROUND_BRACE_OPEN"
+    ),
+    (
+        ")",
+        "ROUND_BRACE_CLOSE"
+    ),
+    (
+        "{",
+        "CURLY_BRACE_OPEN"
+    ),
+    (
+        "}",
+        "CURLY_BRACE_CLOSE"
+    ),
+    (
+        "=",
+        "EQUALS"
+    )
+]
+Output:
+[
+    (
+        "for",
+        {
+            "FOR",
+            "IF",
+            "rId",
+            "WHILE"
+        }
+    ),
+    (
+        "(",
+        {
+            "ROUND_BRACE_OPEN"
+        }
+    ),
+    (
+        "i",
+        {
+            "FOR",
+            "IF",
+            "rId",
+            "WHILE"
+        }
+    ),
+    (
+        "=",
+        {
+            "EQUALS"
+        }
+    ),
+    (
+        "0",
+        {
+            "rNum"
+        }
+    ),
+    (
+        ";",
+        {
+            "SEMICOLON"
+        }
+    ),
+    (
+        "i",
+        {
+            "FOR",
+            "IF",
+            "rId",
+            "WHILE"
+        }
+    ),
+    (
+        "<",
+        {
+            "SMALLER"
+        }
+    ),
+    (
+        "10",
+        {
+            "rNum"
+        }
+    ),
+    (
+        ";",
+        {
+            "SEMICOLON"
+        }
+    ),
+    (
+        "i",
+        {
+            "FOR",
+            "IF",
+            "rId",
+            "WHILE"
+        }
+    ),
+    (
+        "++",
+        {
+            "PLUSPLUS"
+        }
+    ),
+    (
+        ")",
+        {
+            "ROUND_BRACE_CLOSE"
+        }
+    ),
+    (
+        "{",
+        {
+            "CURLY_BRACE_OPEN"
+        }
+    ),
+    (
+        "print",
+        {
+            "FOR",
+            "IF",
+            "rId",
+            "WHILE"
+        }
+    ),
+    (
+        "(",
+        {
+            "ROUND_BRACE_OPEN"
+        }
+    ),
+    (
+        "i",
+        {
+            "FOR",
+            "IF",
+            "rId",
+            "WHILE"
+        }
+    ),
+    (
+        ")",
+        {
+            "ROUND_BRACE_CLOSE"
+        }
+    ),
+    (
+        ";",
+        {
+            "SEMICOLON"
+        }
+    ),
+    (
+        "}",
+        {
+            "CURLY_BRACE_CLOSE"
+        }
+    )
+]
+
+test tests::sim3 ... ok
+
+test result: ok. 3 passed; 0 failed; 0 ignored; 0 measured; 0 filtered out
+
+
+running 0 tests
+
+test result: ok. 0 passed; 0 failed; 0 ignored; 0 measured; 0 filtered out
+

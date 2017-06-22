@@ -1,5 +1,5 @@
 
-running 3 tests
+running 4 tests
 Input: '<<<<<'
 Regular Expressions:
 [
@@ -63,8 +63,8 @@ Output:
     (
         "abc",
         {
-            "rId",
-            "ABC"
+            "ABC",
+            "rId"
         }
     ),
     (
@@ -76,14 +76,12 @@ Output:
     (
         "dd",
         {
-            "rId",
-            "ABC"
+            "ABC",
+            "rId"
         }
     )
 ]
 
-test tests::sim2 ... ok
-test tests::sim1 ... ok
 Input: 'for(i=0;i<10;i++){print(i);}'
 Regular Expressions:
 [
@@ -141,10 +139,10 @@ Output:
     (
         "for",
         {
+            "WHILE",
             "FOR",
             "IF",
-            "rId",
-            "WHILE"
+            "rId"
         }
     ),
     (
@@ -156,10 +154,10 @@ Output:
     (
         "i",
         {
+            "WHILE",
             "FOR",
             "IF",
-            "rId",
-            "WHILE"
+            "rId"
         }
     ),
     (
@@ -183,10 +181,10 @@ Output:
     (
         "i",
         {
+            "WHILE",
             "FOR",
             "IF",
-            "rId",
-            "WHILE"
+            "rId"
         }
     ),
     (
@@ -210,10 +208,10 @@ Output:
     (
         "i",
         {
+            "WHILE",
             "FOR",
             "IF",
-            "rId",
-            "WHILE"
+            "rId"
         }
     ),
     (
@@ -237,10 +235,10 @@ Output:
     (
         "print",
         {
+            "WHILE",
             "FOR",
             "IF",
-            "rId",
-            "WHILE"
+            "rId"
         }
     ),
     (
@@ -252,10 +250,10 @@ Output:
     (
         "i",
         {
+            "WHILE",
             "FOR",
             "IF",
-            "rId",
-            "WHILE"
+            "rId"
         }
     ),
     (
@@ -278,9 +276,274 @@ Output:
     )
 ]
 
-test tests::sim3 ... ok
+Input: 'for (i = 0; i < 10; i++) {	print(i); }'
+Regular Expressions:
+[
+    (
+        "for",
+        "FOR"
+    ),
+    (
+        "if",
+        "IF"
+    ),
+    (
+        "while",
+        "WHILE"
+    ),
+    (
+        ";",
+        "SEMICOLON"
+    ),
+    (
+        "<",
+        "SMALLER"
+    ),
+    (
+        "+",
+        "PLUS"
+    ),
+    (
+        "++",
+        "PLUSPLUS"
+    ),
+    (
+        "(",
+        "ROUND_BRACE_OPEN"
+    ),
+    (
+        ")",
+        "ROUND_BRACE_CLOSE"
+    ),
+    (
+        "{",
+        "CURLY_BRACE_OPEN"
+    ),
+    (
+        "}",
+        "CURLY_BRACE_CLOSE"
+    ),
+    (
+        "=",
+        "EQUALS"
+    ),
+    (
+        " ",
+        "SPACE"
+    ),
+    (
+        "\t",
+        "TAB"
+    )
+]
+Output:
+[
+    (
+        "for",
+        {
+            "IF",
+            "FOR",
+            "WHILE",
+            "rId"
+        }
+    ),
+    (
+        " ",
+        {
+            "SPACE"
+        }
+    ),
+    (
+        "(",
+        {
+            "ROUND_BRACE_OPEN"
+        }
+    ),
+    (
+        "i",
+        {
+            "IF",
+            "FOR",
+            "WHILE",
+            "rId"
+        }
+    ),
+    (
+        " ",
+        {
+            "SPACE"
+        }
+    ),
+    (
+        "=",
+        {
+            "EQUALS"
+        }
+    ),
+    (
+        " ",
+        {
+            "SPACE"
+        }
+    ),
+    (
+        "0",
+        {
+            "rNum"
+        }
+    ),
+    (
+        ";",
+        {
+            "SEMICOLON"
+        }
+    ),
+    (
+        " ",
+        {
+            "SPACE"
+        }
+    ),
+    (
+        "i",
+        {
+            "IF",
+            "FOR",
+            "WHILE",
+            "rId"
+        }
+    ),
+    (
+        " ",
+        {
+            "SPACE"
+        }
+    ),
+    (
+        "<",
+        {
+            "SMALLER"
+        }
+    ),
+    (
+        " ",
+        {
+            "SPACE"
+        }
+    ),
+    (
+        "10",
+        {
+            "rNum"
+        }
+    ),
+    (
+        ";",
+        {
+            "SEMICOLON"
+        }
+    ),
+    (
+        " ",
+        {
+            "SPACE"
+        }
+    ),
+    (
+        "i",
+        {
+            "IF",
+            "FOR",
+            "WHILE",
+            "rId"
+        }
+    ),
+    (
+        "++",
+        {
+            "PLUSPLUS"
+        }
+    ),
+    (
+        ")",
+        {
+            "ROUND_BRACE_CLOSE"
+        }
+    ),
+    (
+        " ",
+        {
+            "SPACE"
+        }
+    ),
+    (
+        "{",
+        {
+            "CURLY_BRACE_OPEN"
+        }
+    ),
+    (
+        "\t",
+        {
+            "TAB"
+        }
+    ),
+    (
+        "print",
+        {
+            "IF",
+            "FOR",
+            "WHILE",
+            "rId"
+        }
+    ),
+    (
+        "(",
+        {
+            "ROUND_BRACE_OPEN"
+        }
+    ),
+    (
+        "i",
+        {
+            "IF",
+            "FOR",
+            "WHILE",
+            "rId"
+        }
+    ),
+    (
+        ")",
+        {
+            "ROUND_BRACE_CLOSE"
+        }
+    ),
+    (
+        ";",
+        {
+            "SEMICOLON"
+        }
+    ),
+    (
+        " ",
+        {
+            "SPACE"
+        }
+    ),
+    (
+        "}",
+        {
+            "CURLY_BRACE_CLOSE"
+        }
+    )
+]
 
-test result: ok. 3 passed; 0 failed; 0 ignored; 0 measured; 0 filtered out
+test tests::sim2 ... ok
+test tests::sim1 ... ok
+test tests::sim3 ... ok
+test tests::sim4 ... ok
+
+test result: ok. 4 passed; 0 failed; 0 ignored; 0 measured; 0 filtered out
 
 
 running 0 tests

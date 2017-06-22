@@ -98,6 +98,28 @@ mod tests {
         run_test(REGEXES_WITH_TOKENS, "for(i=0;i<10;i++){print(i);}");
     }
 
+    #[test]
+    fn sim4() {
+        static REGEXES_WITH_TOKENS: &'static[(&'static str, &'static str)] = &[
+            ("for", "FOR"),
+            ("if", "IF"),
+            ("while", "WHILE"),
+            (";", "SEMICOLON"),
+            ("<", "SMALLER"),
+            ("+", "PLUS"),
+            ("++", "PLUSPLUS"),
+            ("(", "ROUND_BRACE_OPEN"),
+            (")", "ROUND_BRACE_CLOSE"),
+            ("{", "CURLY_BRACE_OPEN"),
+            ("}", "CURLY_BRACE_CLOSE"),
+            ("=", "EQUALS"),
+            (" ", "SPACE"),
+            ("\t", "TAB"),
+        ];
+
+        run_test(REGEXES_WITH_TOKENS, "for (i = 0; i < 10; i++) {\tprint(i); }");
+    }
+
     fn run_test(regexps: &[(&str, &str)], input: &str) {
         println!(
             "Input: '{}'\nRegular Expressions:\n{:#?}\nOutput:\n{:#?}\n",

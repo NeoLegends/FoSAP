@@ -20,7 +20,7 @@ Unsere Testergebnisse finden sich in `TESTRESULTS.txt` neben dieser Readme. Sie 
 
 ## Ausführen
 
-Die gegebenen Tests und Beispiele können in diesem Ordner mittels
+Rust Code wird mit Cargo kompiliert. Erhältlich ist es über https://rustup.rs. Die gegebenen Tests und Beispiele können in diesem Ordner mittels
 
 ```bash
 cargo test
